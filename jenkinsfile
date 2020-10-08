@@ -1,4 +1,7 @@
 node {
+    stage('SCM') {
+        echo 'GETTING CODE FROM SORUCE CONTROL....'
+    }
     stage('Build') {
         echo 'Building....'
     }
