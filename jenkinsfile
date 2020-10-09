@@ -10,7 +10,7 @@ node {
     }
     stage('Test') {
         echo 'Testing....'
-        shared()
+        script()
     }
     stage('Deploy') {
         echo 'Deploying....'
