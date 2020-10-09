@@ -6,6 +6,7 @@ node {
     stage('Build') {
         echo 'Building....'
         sh '/usr/bin/dotnet --version'
+        sh '/usr/bin/dotnet build console'
     }
     stage('Test') {
         echo 'Testing....'
