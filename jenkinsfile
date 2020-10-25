@@ -1,7 +1,5 @@
 node {
-    tools {
-        "org.jenkinsci.plugins.terraform.TerraformInstallation" "terraform"
-    }
+    
     stage('SCM') {
         echo 'GETTING CODE FROM SORUCE CONTROL....'
         git branch:'${branch}', url: 'https://github.com/JodyPetroni/Groovy.git'
