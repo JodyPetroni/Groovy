@@ -8,26 +8,16 @@ node {
         sh '/usr/bin/dotnet --version'
         sh '/usr/bin/dotnet build src/console.csproj'
     }
-    stage('Terraform Init'){
-        steps {
-                ansiColor('xterm') {
-                withCredentials([azureServicePrincipal(
-                credentialsId: 'b4d31966-2e73-4296-a625-30f361c0090b',
-                subscriptionIdVariable: 'ARM_SUBSCRIPTION_ID',
-                clientIdVariable: 'ARM_CLIENT_ID',
-                clientSecretVariable: 'ARM_CLIENT_SECRET',
-                tenantIdVariable: 'ARM_TENANT_ID'
-            ), string(credentialsId: 'access_key', variable: 'ARM_ACCESS_KEY')]) {
-
-                    sh """
-
-                    echo "Initialising Terraform"
-                    terraform init -backend-config="access_key=$ARM_ACCESS_KEY"
-                    """
-                       }
-                }
-         }
-    }
+    stage('install_deps') {
+			steps {
+				sh "sudo apt install wget zip python-pip -y"
+				sh "cd /tmp"
+				sh "curl -o terraform.zip https://releases.hashicorp.com/terraform/'$terraform_version'/terraform_'$terraform_version'_linux_amd64.zip"
+				sh "unzip terraform.zip"
+				sh "sudo mv terraform /usr/bin"
+				sh "rm -rf terraform.zip"
+			}
+		}
     stage('Test') {
         echo 'Testing....'
         
